@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Table } from "react-bootstrap";
 import Layout from "../components/Layout";
 import setting from "../setting";
 import { DataContext } from "../src/DataContext";
+import { KeySets } from "../src/SharedData";
 import getPrivateKey from "../util/fn.getPrivateKey";
 import getPublicKey from "../util/fn.getPublicKey";
 import isPrime from "../util/fn.isPrime";
@@ -14,12 +15,26 @@ export default function KeyGenPage() {
 
   const [prime1, setPrime1] = useState(p1);
   const [prime2, setPrime2] = useState(p2);
-  const [show, setShow] = useState(false);
-  const [isSet, setIsSet] = useState(false);
-
 
   const GenerateKey = () => {
-    setShow(true);
+    const publicKey = getPublicKey(prime1, prime2);
+    const privateKey = getPrivateKey(prime1, prime2, publicKey);
+    const [public_n, public_e] = publicKey;
+    const [private_n, private_d] = privateKey;
+    const new_key_sets = [{
+      public_n,
+      public_e,
+      private_n,
+      private_d,
+    } as KeySets, ...sharedData.key_sets] as KeySets[];
+    setSharedData({
+      ...sharedData,
+      public_n,
+      public_e,
+      private_n,
+      private_d,
+      key_sets: new_key_sets,
+    });
   };
 
   return (
@@ -28,11 +43,11 @@ export default function KeyGenPage() {
         <Form className="d-flex">
           <Form.Group className="w-50">
             <Form.Label>素数1</Form.Label>
-            <Form.Control type="number" placeholder="Enter prime1" value={prime1} onInput={(e) => {setShow(false); setPrime1(parseInt(e.currentTarget.value));}} />
+            <Form.Control type="number" placeholder="Enter prime1" value={prime1} onInput={(e) => {setPrime1(parseInt(e.currentTarget.value))}} />
           </Form.Group>
           <Form.Group className="w-50">
             <Form.Label>素数2</Form.Label>
-            <Form.Control type="number" placeholder="Enter prime2" value={prime2} onInput={(e) => {setShow(false); setPrime2(parseInt(e.currentTarget.value));}} />
+            <Form.Control type="number" placeholder="Enter prime2" value={prime2} onInput={(e) => {setPrime2(parseInt(e.currentTarget.value))}} />
           </Form.Group>
         </Form>
         {
@@ -60,40 +75,34 @@ export default function KeyGenPage() {
             <Button variant="primary" className="mt-3 d-block m-auto" onClick={GenerateKey}>鍵を生成</Button>
           )
         }
-        {
-          show && (
-            <>
-              <hr />
-              <Alert variant="info" className="mt-3">
-                <Alert.Heading>公開鍵</Alert.Heading>
-                <p>
-                  n = {getPublicKey(prime1, prime2)[0]}<br />
-                  e = {getPublicKey(prime1, prime2)[1]}
-                </p>
-              </Alert>
-              <Alert variant="info" className="mt-3">
-                <Alert.Heading>秘密鍵</Alert.Heading>
-                <p>
-                  n = {getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[0]}<br />
-                  d = {getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[1]}
-                </p>
-              </Alert>
-              <Button variant="warning" className="mt-3 d-block m-auto" onClick={async () => {
-                setSharedData({
-                  username: sharedData.username,
-                  message: sharedData.message,
-                  public_n: getPublicKey(prime1, prime2)[0],
-                  public_e: getPublicKey(prime1, prime2)[1],
-                  private_n: getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[0],
-                  private_d: getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[1],
-                });
-                setIsSet(true);
-                await new Promise((resolve) => setTimeout(resolve, setting.waitingTime));
-                setIsSet(false);
-              }}>{ isSet ? 'OK !!!' : '鍵を設定' }</Button>
-            </>
-          )
-        }
+        <Table striped bordered hover className="mt-3">
+          <thead>
+            <tr>
+              <th colSpan={2} className="w-50">公開鍵</th>
+              <th colSpan={2} className="w-50">秘密鍵</th>
+            </tr>
+            <tr>
+              <th className="w-25">n</th>
+              <th className="w-25">e</th>
+              <th className="w-25">n</th>
+              <th className="w-25">d</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              sharedData.key_sets.map((key_set, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{key_set.public_n}</td>
+                    <td>{key_set.public_e}</td>
+                    <td>{key_set.private_n}</td>
+                    <td>{key_set.private_d}</td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </Table>
       </div>
     </Layout>
   );

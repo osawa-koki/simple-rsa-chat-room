@@ -49,6 +49,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     public_e,
     private_n,
     private_d,
+    key_sets: [],
   });
 
   return (
