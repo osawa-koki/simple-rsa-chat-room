@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace sinalr_nextjs_chat
+namespace simple_rsa_chat_room
 {
   public class ChatHub : Hub
   {

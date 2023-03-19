@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>sinalr_nextjs_chat</RootNamespace>
+    <RootNamespace>simple_rsa_chat_room</RootNamespace>
   </PropertyGroup>
 
 </Project>
