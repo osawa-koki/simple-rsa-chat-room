@@ -7,6 +7,8 @@ import Layout from "../components/Layout";
 
 import { DataContext } from "../src/DataContext";
 import setting from "../setting";
+import encrypt from "../util/fn.encrypt";
+import decrypt from "../util/fn.decrypt";
 
 export default function ChatPage() {
 
@@ -19,7 +21,7 @@ export default function ChatPage() {
     setError(null);
     const user = sharedData.username;
     const message = sharedData.message;
-    connection!.invoke("SendMessage", user, message).catch((err: Error) => {
+    connection!.invoke("SendMessage", user, encrypt([sharedData.n, sharedData.e], message)).catch((err: Error) => {
       setError(`${err}`);
     });
   };
@@ -121,7 +123,7 @@ export default function ChatPage() {
         }
         <ul>
           {messages.map((msg, idx) => (
-            <li key={idx}>{msg}</li>
+            <li key={idx}>{decrypt([sharedData.n, sharedData.d], msg)}</li>
           ))}
         </ul>
       </div>
