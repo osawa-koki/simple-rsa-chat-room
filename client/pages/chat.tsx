@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
-import { Button, Alert, Form } from 'react-bootstrap';
+import { Button, Alert, Form, Table } from 'react-bootstrap';
 import Layout from "../components/Layout";
 
 import { DataContext } from "../src/DataContext";
@@ -58,6 +58,40 @@ export default function ChatPage() {
     <Layout>
       <div id="Chat">
         <h1>Chat</h1>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th colSpan={2}>公開鍵</th>
+              <th colSpan={2}>秘密鍵</th>
+            </tr>
+            <tr>
+              <th>n</th>
+              <th>e</th>
+              <th>n</th>
+              <th>d</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><Form.Control type="number" value={sharedData.n} onInput={(e) => {setSharedData({
+                ...sharedData,
+                n: parseInt(e.currentTarget.value),
+              })}} /></td>
+              <td><Form.Control type="number" value={sharedData.e} onInput={(e) => {setSharedData({
+                ...sharedData,
+                e: parseInt(e.currentTarget.value),
+              })}} /></td>
+              <td><Form.Control type="number" value={sharedData.n} onInput={(e) => {setSharedData({
+                ...sharedData,
+                n: parseInt(e.currentTarget.value),
+              })}} /></td>
+              <td><Form.Control type="number" value={sharedData.d} onInput={(e) => {setSharedData({
+                ...sharedData,
+                d: parseInt(e.currentTarget.value),
+              })}} /></td>
+            </tr>
+          </tbody>
+        </Table>
         <Form>
           <Form.Group className="mt-3">
             <Form.Label>Username</Form.Label>

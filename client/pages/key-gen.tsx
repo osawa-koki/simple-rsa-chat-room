@@ -6,15 +6,17 @@ import { DataContext } from "../src/DataContext";
 import getPrivateKey from "../util/fn.getPrivateKey";
 import getPublicKey from "../util/fn.getPublicKey";
 import isPrime from "../util/fn.isPrime";
+import { prime1 as p1, prime2 as p2 } from "./_app";
 
 export default function KeyGenPage() {
 
-  const [prime1, setPrime1] = useState(13);
-  const [prime2, setPrime2] = useState(17);
+  const { sharedData, setSharedData } = useContext(DataContext);
+
+  const [prime1, setPrime1] = useState(p1);
+  const [prime2, setPrime2] = useState(p2);
   const [show, setShow] = useState(false);
   const [isSet, setIsSet] = useState(false);
 
-  const { sharedData, setSharedData } = useContext(DataContext);
 
   const GenerateKey = () => {
     setShow(true);
