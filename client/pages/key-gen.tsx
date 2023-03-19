@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Alert, Button, Form, Table } from "react-bootstrap";
 import Layout from "../components/Layout";
-import setting from "../setting";
 import { DataContext } from "../src/DataContext";
 import { KeySets } from "../src/SharedData";
 import getPrivateKey from "../util/fn.getPrivateKey";
