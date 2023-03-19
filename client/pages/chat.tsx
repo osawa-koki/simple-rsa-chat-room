@@ -67,10 +67,10 @@ export default function ChatPage() {
       <div id="Chat">
         <h1>Chat</h1>
         <Table striped bordered hover>
-          <thead>
+          <thead className="text-center">
             <tr>
-              <th colSpan={2}>公開鍵</th>
-              <th colSpan={2}>秘密鍵</th>
+              <th colSpan={2}>公開鍵 (送信するメッセージの暗号化用)</th>
+              <th colSpan={2}>秘密鍵 (受信したメッセージの復号用)</th>
             </tr>
             <tr>
               <th>n</th>
