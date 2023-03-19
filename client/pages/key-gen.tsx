@@ -82,9 +82,10 @@ export default function KeyGenPage() {
                 setSharedData({
                   username: sharedData.username,
                   message: sharedData.message,
-                  n: getPublicKey(prime1, prime2)[0],
-                  e: getPublicKey(prime1, prime2)[1],
-                  d: getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[1]
+                  public_n: getPublicKey(prime1, prime2)[0],
+                  public_e: getPublicKey(prime1, prime2)[1],
+                  private_n: getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[0],
+                  private_d: getPrivateKey(prime1, prime2, getPublicKey(prime1, prime2))[1],
                 });
                 setIsSet(true);
                 await new Promise((resolve) => setTimeout(resolve, setting.waitingTime));

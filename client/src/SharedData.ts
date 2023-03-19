@@ -1,9 +1,10 @@
 type SharedData = {
   username: string;
   message: string;
-  n: number | null;
-  e: number | null;
-  d: number | null;
+  public_n: number;
+  public_e: number;
+  private_n: number;
+  private_d: number;
 };
 
 export default SharedData;

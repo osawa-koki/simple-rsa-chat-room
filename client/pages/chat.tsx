@@ -26,7 +26,7 @@ export default function ChatPage() {
     setError(null);
     const user = sharedData.username;
     const message = sharedData.message;
-    connection!.invoke("SendMessage", user, encrypt([sharedData.n, sharedData.e], message)).catch((err: Error) => {
+    connection!.invoke("SendMessage", user, encrypt([sharedData.public_n, sharedData.public_e], message)).catch((err: Error) => {
       setError(`${err}`);
     });
   };
@@ -81,21 +81,21 @@ export default function ChatPage() {
           </thead>
           <tbody>
             <tr>
-              <td><Form.Control type="number" value={sharedData.n} onInput={(e) => {setSharedData({
+              <td><Form.Control type="number" value={sharedData.public_n} onInput={(e) => {setSharedData({
                 ...sharedData,
-                n: parseInt(e.currentTarget.value),
+                public_n: parseInt(e.currentTarget.value),
               })}} /></td>
-              <td><Form.Control type="number" value={sharedData.e} onInput={(e) => {setSharedData({
+              <td><Form.Control type="number" value={sharedData.public_e} onInput={(e) => {setSharedData({
                 ...sharedData,
-                e: parseInt(e.currentTarget.value),
+                public_e: parseInt(e.currentTarget.value),
               })}} /></td>
-              <td><Form.Control type="number" value={sharedData.n} onInput={(e) => {setSharedData({
+              <td><Form.Control type="number" value={sharedData.private_n} onInput={(e) => {setSharedData({
                 ...sharedData,
-                n: parseInt(e.currentTarget.value),
+                private_n: parseInt(e.currentTarget.value),
               })}} /></td>
-              <td><Form.Control type="number" value={sharedData.d} onInput={(e) => {setSharedData({
+              <td><Form.Control type="number" value={sharedData.private_d} onInput={(e) => {setSharedData({
                 ...sharedData,
-                d: parseInt(e.currentTarget.value),
+                private_d: parseInt(e.currentTarget.value),
               })}} /></td>
             </tr>
           </tbody>
@@ -138,7 +138,7 @@ export default function ChatPage() {
             {messages.map((message, idx) => (
               <tr key={idx}>
                 <td>{message.user}</td>
-                <td>{decrypt([sharedData.n, sharedData.d], message.message)}</td>
+                <td>{decrypt([sharedData.private_n, sharedData.private_d], message.message)}</td>
               </tr>
             ))}
           </tbody>

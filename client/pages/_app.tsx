@@ -28,16 +28,16 @@ if (publicKey[0] !== privateKey[0]) {
   throw new Error('publicKey[0] !== privateKey[0]');
 }
 
-const n = publicKey[0];
-const e = publicKey[1];
-const d = privateKey[1];
+const [public_n, public_e] = publicKey;
+const [private_n, private_d] = privateKey;
 
 export {
   prime1,
   prime2,
-  n,
-  e,
-  d,
+  public_n,
+  public_e,
+  private_n,
+  private_d,
 }
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -45,9 +45,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [sharedData, setSharedData] = useState<SharedData>({
     username: 'user_xxx',
     message: 'Hello everyone!',
-    n,
-    e,
-    d,
+    public_n,
+    public_e,
+    private_n,
+    private_d,
   });
 
   return (
