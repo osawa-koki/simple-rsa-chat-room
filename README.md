@@ -5,6 +5,15 @@
 
 ![成果物](./docs/img/fruit.gif)  
 
+## 使用技術
+
+- Docker
+- .NET
+  - C# (ASP.NET / Minimal API)
+- Next.js
+  - TypeScript
+  - React
+
 ## 実行方法
 
 ```shell
