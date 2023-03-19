@@ -6,6 +6,7 @@ const setting = {
   basePath: Env.basePath,
   apiPath: isProd ? '' : 'http://localhost:8000',
   title: '🐱 SignalR-Nextjs-chat 🐱',
+  waitingTime: 1000,
 };
 
 export default setting;

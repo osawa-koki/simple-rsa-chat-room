@@ -11,6 +11,11 @@ const pages = [
   },
   {
     emoji: '💓',
+    path: '/key-gen/',
+    name: 'key-gen',
+  },
+  {
+    emoji: '💓',
     path: '/chat/',
     name: 'Chat',
   },

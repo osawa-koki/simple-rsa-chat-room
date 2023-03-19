@@ -21,7 +21,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const [sharedData, setSharedData] = useState<SharedData>({
     username: 'user_xxx',
-    message: 'Hello everyone!'
+    message: 'Hello everyone!',
+    n: null,
+    e: null,
+    d: null,
   });
 
   return (
