@@ -10,10 +10,15 @@ import setting from "../setting";
 import encrypt from "../util/fn.encrypt";
 import decrypt from "../util/fn.decrypt";
 
+type Message = {
+  user: string;
+  message: string;
+};
+
 export default function ChatPage() {
 
   const [connection, setConnection] = useState<HubConnection | null>(null);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [ready, setReady] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,7 +54,8 @@ export default function ChatPage() {
   useEffect(() => {
     if (connection) {
       connection.on("ReceiveMessage", (user: string, message: string) => {
-        setMessages([`${user}: ${message}`, ...messages]);
+        const new_messages = [{user, message}, ...messages];
+        setMessages(new_messages);
       });
     }
   }, [connection, messages]);
@@ -121,11 +127,22 @@ export default function ChatPage() {
             </Alert>
           )
         }
-        <ul>
-          {messages.map((msg, idx) => (
-            <li key={idx}>{decrypt([sharedData.n, sharedData.d], msg)}</li>
-          ))}
-        </ul>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>送信者</th>
+              <th>メッセージ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {messages.map((message, idx) => (
+              <tr key={idx}>
+                <td>{message.user}</td>
+                <td>{decrypt([sharedData.n, sharedData.d], message.message)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     </Layout>
   );
