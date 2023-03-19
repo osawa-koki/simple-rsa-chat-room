@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
@@ -54,7 +54,7 @@ export default function ChatPage() {
     }
   }, [connection, messages]);
 
-  const { sharedData, setSharedData } = React.useContext(DataContext);
+  const { sharedData, setSharedData } = useContext(DataContext);
 
   return (
     <Layout>
