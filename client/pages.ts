@@ -10,7 +10,7 @@ const pages = [
     name: 'About',
   },
   {
-    emoji: '💓',
+    emoji: '🔏',
     path: '/key-gen/',
     name: 'key-gen',
   },
